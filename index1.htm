@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OPL Themes Creator</title>
+  <link rel="icon" href="faviconlogo.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96logo.png">
+  <link rel="apple-touch-icon" href="apple-touch-iconlogo.png">
+  <link rel="manifest" href="site1.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="home-page">
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="index.html" aria-label="OPL Themes Creator">
+        <span class="brand-mark brand-mark--image"><img src="logo1.png" alt=""></span>
+        <span class="brand-name">OPL Themes Creator</span>
+      </a>
+
+      <nav class="main-actions" aria-label="Acoes principais">
+        <a class="button button--primary" href="design.html">Criar tema</a>
+        <button class="button" type="button" data-demo="Importacao de tema">Importar</button>
+        <button class="button" type="button" data-demo="Exportacao do projeto">Exportar</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="home-hero">
+    <section class="hero-copy" aria-labelledby="hero-title">
+      <p class="eyebrow">Editor visual para Open PS2 Loader</p>
+      <h1 id="hero-title">Crie temas OPL bonitos, leves e prontos para o PS2.</h1>
+      <p>
+        Monte a interface em um canvas 640x448, edite elementos do
+        <code>conf_theme.cfg</code>, visualize camadas e exporte uma base limpa
+        para testar no OPL.
+      </p>
+      <div class="hero-actions">
+        <a class="button button--primary" href="design.html">Abrir designer</a>
+        <a class="button" href="#pipeline">Ver fluxo</a>
+      </div>
+    </section>
+
+    <section class="hero-preview" aria-label="Previa do editor">
+      <div class="mini-topbar">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="mini-editor">
+        <aside></aside>
+        <div class="mini-canvas">
+          <div class="mini-tabs">
+            <span>USB</span><span>HDD</span><span>ETH</span>
+          </div>
+          <div class="mini-list"></div>
+          <div class="mini-cover"></div>
+        </div>
+        <aside></aside>
+      </div>
+    </section>
+  </main>
+
+  <section class="workflow" id="pipeline">
+    <article>
+      <strong>1. Importar</strong>
+      <span>Leia uma pasta de tema contendo <code>conf_theme.cfg</code> e imagens.</span>
+    </article>
+    <article>
+      <strong>2. Editar</strong>
+      <span>Arraste elementos, ajuste coordenadas, tamanho, cor e assets.</span>
+    </article>
+    <article>
+      <strong>3. Exportar</strong>
+      <span>Gere o arquivo de configuracao para usar no OPL real.</span>
+    </article>
+  </section>
+
+  <script>
+    document.querySelectorAll('[data-demo]').forEach((button) => {
+      button.addEventListener('click', () => {
+        alert(button.dataset.demo + ' sera feita no designer.');
+      });
+    });
+  </script>
+</body>
+</html>

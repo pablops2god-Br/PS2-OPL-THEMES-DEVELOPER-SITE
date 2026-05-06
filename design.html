@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OPL Theme Studio</title>
+  <link rel="icon" href="faviconlogo.ico">
+  <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96logo.png">
+  <link rel="apple-touch-icon" href="apple-touch-iconlogo.png">
+  <link rel="manifest" href="site1.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="designer-page">
+  <header class="studio-topbar">
+    <a class="brand brand--compact" href="index.html" aria-label="Voltar ao inicio">
+      <span class="brand-mark brand-mark--image"><img src="logo1.png" alt=""></span>
+      <span class="brand-name">Theme Studio</span>
+    </a>
+
+    <div class="toolbar">
+      <button class="tool-button" type="button" id="undoBtn" title="Desfazer">Desfazer</button>
+      <button class="tool-button" type="button" id="redoBtn" title="Refazer">Refazer</button>
+      <button class="tool-button" type="button" id="newThemeBtn" title="Novo tema">Novo</button>
+      <button class="tool-button" type="button" id="loadThemeBtn" title="Carregar pasta de tema">Carregar</button>
+      <button class="tool-button" type="button" id="exportCfgBtn" title="Exportar conf_theme.cfg">Exportar CFG</button>
+      <button class="tool-button" type="button" id="exportZipBtn" title="Exportar tema completo">Exportar ZIP</button>
+      <a class="tool-button" href="index.html" title="Inicio">Inicio</a>
+    </div>
+  </header>
+
+  <div class="studio-shell">
+    <aside class="asset-panel" id="leftPanel">
+      <button class="panel-toggle" type="button" id="toggleLeftBtn" aria-label="Recolher painel esquerdo">‹</button>
+      <section class="panel-section">
+        <h2>Projeto</h2>
+        <div class="folder-tree" id="folderTree">Nenhum tema carregado.</div>
+      </section>
+      <section class="panel-section">
+        <h2>Assets</h2>
+        <div class="asset-grid" id="assetGrid"></div>
+      </section>
+    </aside>
+
+    <main class="stage-wrap">
+      <div class="device-tabs" role="tablist" aria-label="Dispositivo OPL">
+        <button class="device-tab is-active" type="button" data-device="USB">USB</button>
+        <button class="device-tab" type="button" data-device="HDD">HDD</button>
+        <button class="device-tab" type="button" data-device="ETH">ETH</button>
+        <button class="device-tab" type="button" data-device="APPS">APPS</button>
+        <button class="device-tab" type="button" data-device="PS1">PS1</button>
+        <button class="device-tab" type="button" data-device="INFO">INFO</button>
+      </div>
+
+      <div class="viewport-tools">
+        <button class="mini-button" type="button" id="copyUsbLayoutBtn">Copiar USB para APPS/PS1</button>
+        <span class="tab-mode-label" id="tabModeLabel">USB/HDD/ETH compartilham main</span>
+        <label>
+          Preview
+          <select id="resolutionSelect">
+            <option value="640x480">Virtual OPL 640x480</option>
+            <option value="640x448">NTSC real 640x448</option>
+            <option value="640x512">PAL real 640x512</option>
+            <option value="1280x720">HDTV 720p</option>
+            <option value="1920x1080">HDTV 1080p</option>
+          </select>
+        </label>
+        <button class="mini-button" type="button" id="convertLayoutBtn">Converter layout</button>
+        <label><input id="autoConvertToggle" type="checkbox"> Converter ao trocar</label>
+        <label><input id="showGridToggle" type="checkbox" checked> Grade</label>
+        <label>
+          Passo
+          <input id="gridSizeInput" type="number" min="2" max="64" value="16">
+        </label>
+        <label><input id="snapGridToggle" type="checkbox" checked> Snap grade</label>
+        <label><input id="snapObjectsToggle" type="checkbox" checked> Snap objetos</label>
+        <label>
+          Zoom
+          <input id="zoomRange" type="range" min="40" max="220" value="100">
+        </label>
+      </div>
+
+      <section class="opl-stage" id="oplStage" aria-label="Canvas OPL">
+        <div class="opl-screen" id="oplScreen">
+          <div class="opl-content" id="canvasContent"></div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="inspector">
+      <section class="panel-section">
+        <div class="section-row">
+          <h2>Camadas</h2>
+          <button class="mini-button" type="button" id="addElementBtn">Adicionar</button>
+        </div>
+        <div class="layer-actions" aria-label="Ordem das camadas">
+          <button class="mini-button" type="button" id="bringForwardBtn">Frente</button>
+          <button class="mini-button" type="button" id="sendBackwardBtn">Tras</button>
+          <button class="mini-button" type="button" id="bringToFrontBtn">Topo</button>
+          <button class="mini-button" type="button" id="sendToBackBtn">Fundo</button>
+        </div>
+        <div class="layer-list" id="layerList"></div>
+      </section>
+
+      <section class="panel-section">
+        <h2>Propriedades</h2>
+        <div class="empty-state" id="emptyProps">Selecione uma camada.</div>
+        <form class="props-form" id="propsPanel" hidden>
+          <label>Secao<input id="propId" readonly></label>
+          <label>Tipo
+            <select id="propType">
+              <option>Background</option>
+              <option>StaticImage</option>
+              <option>GameImage</option>
+              <option>ItemsList</option>
+              <option>ItemCover</option>
+              <option>ItemIcon</option>
+              <option>MenuText</option>
+              <option>MenuIcon</option>
+              <option>HintText</option>
+              <option>ItemText</option>
+              <option>AttributeText</option>
+              <option>AttributeImage</option>
+            </select>
+          </label>
+          <div class="field-pair">
+            <label>X<input id="propX" type="number"></label>
+            <label>Y<input id="propY" type="number"></label>
+          </div>
+          <div class="field-pair">
+            <label>Largura<input id="propW" type="number"></label>
+            <label>Altura<input id="propH" type="number"></label>
+          </div>
+          <div class="field-row">
+            <label class="check-row"><input id="lockRatioToggle" type="checkbox"> Travar proporcao</label>
+            <button class="mini-button" type="button" id="fitScreenBtn">Tela inteira</button>
+          </div>
+          <div class="field-row">
+            <button class="mini-button" type="button" id="safeSizeBtn">Tamanho seguro OPL</button>
+            <span class="safe-size-hint" id="safeSizeHint">Selecione um elemento.</span>
+          </div>
+          <label>Cor<input id="propColor" type="text" placeholder="#FFFFFF"></label>
+          <label>Imagem default<input id="propDefault" type="text" placeholder="background"></label>
+          <label>Pattern<input id="propPattern" type="text" placeholder="COV"></label>
+          <div class="field-pair">
+            <label>Alinhamento
+              <select id="propAlign">
+                <option value="">Padrao</option>
+                <option value="0">Esquerda</option>
+                <option value="1">Centro</option>
+                <option value="2">Direita</option>
+              </select>
+            </label>
+            <label>Scaled
+              <select id="propScaled">
+                <option value="">Padrao</option>
+                <option value="0">Nao</option>
+                <option value="1">Sim</option>
+              </select>
+            </label>
+          </div>
+          <button class="danger-button" type="button" id="deleteElementBtn">Remover camada</button>
+        </form>
+      </section>
+
+      <section class="panel-section">
+        <h2>Validacao</h2>
+        <div class="validation-list" id="validationList"></div>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="status-bar" id="statusMsg">Pronto.</footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
